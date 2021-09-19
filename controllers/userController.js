@@ -1,5 +1,6 @@
 const { User } = require('../models/users')
 const bcrypt = require('bcryptjs')
+const chalk = require('chalk')
 
 //POST NEW USER
 exports.createUser = async (req, res, next) => {
@@ -24,4 +25,13 @@ exports.getUsers = async (req, res, next) => {
 
     //if userlist not exists ->send error else send users
     !userList ? res.status(500).json({ success: false }) : res.send(userList)
+}
+
+//GET A USER
+exports.getUserById = async (req, res, next) => {
+    //finds all users with no filter
+    const user = await User.findById(req.params.id)
+
+    //if userlist not exists ->send error else send users
+    !user ? res.status(500).json({ success: false }) : res.send(user)
 }
