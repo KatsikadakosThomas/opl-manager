@@ -25,7 +25,7 @@ const userRouter = require('./routes/users')
 const sheetRouter = require('./routes/sheet')
 
 // //routes
-app.use(`${api}/users`, userRouter)
+app.use(`${api}/user`, userRouter)
 app.use(`${api}/sheet`, sheetRouter)
 
 //database connection
