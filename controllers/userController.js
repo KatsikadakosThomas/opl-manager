@@ -39,7 +39,9 @@ exports.getUsers = async (req, res, next) => {
     const userList = await User.find()
 
     //if userlist not exists ->send error else send users
-    !userList ? res.status(500).json({ success: false }) : res.send(userList)
+    !userList
+        ? res.status(500).json({ success: false, message: err })
+        : res.send(userList)
 }
 
 //GET A USER
@@ -51,6 +53,7 @@ exports.getUserById = async (req, res, next) => {
     !user ? res.status(500).json({ success: false }) : res.send(user)
 }
 
+//post login
 exports.loginUser = async (req, res, next) => {
     const user = await User.find({ email: req.body.email })
     console.log(user)
@@ -65,10 +68,9 @@ exports.loginUser = async (req, res, next) => {
                             email: user[0].email,
                             userId: user[0]._id,
                         },
-                        process.env.TOKEN,
+                        process.env.SECRET,
                         { expiresIn: '2h' }
                     )
-                    console.log(token)
 
                     res.cookie('jwt', token)
                     res.status(200).json({
