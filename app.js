@@ -7,15 +7,17 @@ const DB = require('./db')
 const chalk = require('chalk')
 const isLoggedIn = require('./helpers/isLoggedIn')
 const errorHandler = require('./helpers/errorHandler')
+var helmet = require('helmet')
 
 //middleware
 
 app.use(cors())
 app.options('*', cors())
 app.use(express.json())
+app.use(helmet())
 app.use(morgan('tiny'))
 app.use(errorHandler)
-
+app.disable('x-powered-by')
 //prettier-ignore
 require('dotenv').config({path:process.env.NODE_ENV === 'development'? '.env.development': '.env.production'})
 
