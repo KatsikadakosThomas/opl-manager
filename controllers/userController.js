@@ -2,6 +2,7 @@ const { User } = require('../models/users')
 const bcrypt = require('bcryptjs')
 const chalk = require('chalk')
 const jwt = require('jsonwebtoken')
+const session = require('express-session')
 
 //POST NEW USER
 exports.createUser = async (req, res, next) => {
@@ -69,12 +70,11 @@ exports.loginUser = async (req, res, next) => {
                             userId: user[0]._id,
                         },
                         process.env.SECRET,
-                        { expiresIn: '2h' }
+                        { expiresIn: '8h' }
                     )
-
-                    res.cookie('jwt', token)
+                    // res.cookie('jwt', token, { maxAge: 900000 })
                     res.status(200).json({
-                        jwt: token,
+                        accessToken: token,
                     })
                 } else {
                     res.status(401).json({

@@ -4,12 +4,14 @@ const secret = process.env.SECRET
 
 module.exports = (req, res, next) => {
     //get authorization header
-    const authHeader = req.get('authorization')
+    // const authHeader = req.get('authorization')
 
     //the auth header is in the form of BEARER "token" where token is the encoded info
     // so we split bearer from token  and with [1] select the second part
-    const token = authHeader && authHeader.split(' ')[1]
+    // const token = authHeader && authHeader.split(' ')[1]
+     
 
+    const token =req.headers["x-access-token"];
     //check if user has a token
     if (token == null) return res.status(401).send('no token')
 
